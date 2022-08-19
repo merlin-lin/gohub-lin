@@ -19,7 +19,6 @@ type ConfigFunc func() map[string]interface{}
 var ConfigFuncs map[string]ConfigFunc
 
 func init() {
-	fmt.Println("init viper")
 	// 1. 初始化Viper库
 	viper = viperlib.New()
 	// 2. 配置类型
@@ -42,8 +41,8 @@ func InitConfig(env string) {
 }
 
 func loadConfig() {
-	for name, value := range ConfigFuncs {
-		viper.Set(name, value)
+	for name, fn := range ConfigFuncs {
+		viper.Set(name, fn())
 	}
 }
 
@@ -88,7 +87,7 @@ func Get(path string, defaultValue ...interface{}) string {
 }
 
 func internalGet(path string, defaultValue ...interface{}) interface{} {
-	if !viper.IsSet(path) || !helpers.Empty(viper.Get(path)) {
+	if !viper.IsSet(path) || helpers.Empty(viper.Get(path)) {
 		if len(defaultValue) > 0 {
 			return defaultValue[0]
 		}

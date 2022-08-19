@@ -24,11 +24,15 @@ func main() {
 	// r := gin.Default()
 
 	// new 一个 Gin Engine 实例
-	r := gin.New()
+	router := gin.New()
 
-	bootstrap.SetupRoute(r)
+	// 初始化DB
+	// bootstrap.SetupDB()
 
-	err := r.Run(":3000")
+	// 初始化路由绑定
+	bootstrap.SetupRoute(router)
+
+	err := router.Run(":" + config.Get("app.port"))
 	if err != nil {
 		fmt.Println(err.Error())
 	}
