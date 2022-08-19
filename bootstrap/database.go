@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"gohub/pkg/config"
+	"gohub/pkg/database"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -40,12 +41,12 @@ func SetupDB() {
 	}
 
 	// 连接数据库，并设置 GORM 的日志模式
-	config.Connect(dbConfig, logger.Default.LogMode(logger.Info))
+	database.Connect(dbConfig, logger.Default.LogMode(logger.Info))
 
 	// 设置最大连接数
-	config.SQLDB.SetMaxOpenConns(config.GetInt("database.mysql.max_open_connections"))
+	database.SQLDB.SetMaxOpenConns(config.GetInt("database.mysql.max_open_connections"))
 	// 设置最大空闲数
-	config.SQLDB.SetMaxIdleConns(config.GetInt("database.mysql.max_idle_connections"))
+	database.SQLDB.SetMaxIdleConns(config.GetInt("database.mysql.max_idle_connections"))
 	// 设置每个链接的过期时间
-	config.SQLDB.SetConnMaxLifetime(time.Duration(config.GetInt("database.mysql.max_life_seconds")) * time.Second)
+	database.SQLDB.SetConnMaxLifetime(time.Duration(config.GetInt("database.mysql.max_life_seconds")) * time.Second)
 }
