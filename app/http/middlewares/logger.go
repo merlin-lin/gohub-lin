@@ -2,7 +2,6 @@ package middlewares
 
 import (
 	"bytes"
-	"fmt"
 	"gohub/pkg/helpers"
 	"gohub/pkg/logger"
 	"io"
@@ -18,13 +17,17 @@ type responseBodyWriter struct {
 	body *bytes.Buffer
 }
 
+func (r responseBodyWriter) Write(b []byte) (int, error) {
+	r.body.Write(b)
+	return r.ResponseWriter.Write(b)
+}
+
 // Logger 记录请求日志
 func Logger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 获取response内容
 		w := &responseBodyWriter{body: &bytes.Buffer{}, ResponseWriter: c.Writer}
 		c.Writer = w
-		fmt.Println("body:", w.body)
 		// 获取请求数据
 		var requestBody []byte
 		if c.Request.Body != nil {
