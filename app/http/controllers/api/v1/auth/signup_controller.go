@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	v1 "gohub/app/http/controllers/api/v1"
 	"gohub/app/models/user"
 	"gohub/app/requests"
@@ -33,7 +32,6 @@ func (sc *SignupController) IsEmailExist(c *gin.Context) {
 		return
 	}
 
-	fmt.Println("validate:")
 	// 从数据库查询
 	c.JSON(http.StatusOK, gin.H{
 		"exist": user.IsEmailExist(request.Email),

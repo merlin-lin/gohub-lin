@@ -1,8 +1,7 @@
 package config
 
 import (
-	"fmt"
-	"gohub/helpers"
+	"gohub/pkg/helpers"
 	"os"
 
 	"github.com/spf13/cast"
@@ -54,7 +53,6 @@ func loadEnv(envSuffix string) {
 			envPath = filepath
 		}
 	}
-	fmt.Println(viper)
 
 	// 加载env
 	viper.SetConfigName(envPath)
