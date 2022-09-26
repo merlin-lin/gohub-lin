@@ -22,7 +22,7 @@ func (r responseBodyWriter) Write(b []byte) (int, error) {
 	return r.ResponseWriter.Write(b)
 }
 
-// Logger 记录请求日志
+// Logger 记录请求日志	
 func Logger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 获取response内容
