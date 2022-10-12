@@ -6,7 +6,6 @@ import (
 	"gohub/bootstrap"
 	configBts "gohub/config"
 	"gohub/pkg/config"
-	"gohub/pkg/sms"
 
 	"github.com/gin-gonic/gin"
 )
@@ -44,11 +43,6 @@ func main() {
 	// 非 release 模式 gin 终端打印太多信息，干扰到我们程序中的 Log
 	// 故此设置为 release，有特殊情况手动改为 debug 即可
 	gin.SetMode(gin.ReleaseMode)
-
-	sms.NewSMS().Send("13655601466", sms.Message{
-		Template: config.GetString("sms.aliyun.template_code"),
-		Data:     map[string]string{"code": "123456"},
-	})
 
 	err := router.Run(":" + config.Get("app.port"))
 	if err != nil {
