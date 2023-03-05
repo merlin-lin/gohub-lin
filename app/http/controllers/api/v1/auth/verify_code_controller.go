@@ -40,5 +40,22 @@ func (vc *VerfifyCodeController) SendUsingPhone(c *gin.Context) {
 	} else {
 		response.Success(c)
 	}
+}
+
+// SendUsingEmail 发送 Email 验证码
+func (vc *VerfifyCodeController) SendUsingEmail(c *gin.Context) {
+	// 1. 验证表单
+	request := requests.VerfifyCodeEmailRequest{}
+	if ok := requests.Validate(c, &request, requests.VerfifyCodeEmail); !ok {
+		return
+	}
+
+	// 2. 发送邮件
+	errs := verifycode.NewVerfiyCode().SendEmail(request.Email)
+	if errs != nil {
+		response.Abort500(c, "发送验证码失败～")
+	} else {
+		response.Success(c)
+	}
 
 }
