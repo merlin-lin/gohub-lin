@@ -3,6 +3,8 @@ package jwt
 import (
 	"errors"
 	"time"
+
+	jwtpkg "github.com/golang-jwt/jwt"
 )
 
 var (
@@ -36,6 +38,12 @@ type JWTCustomClaims struct {
 	// - aud (audience)：观众，相当于接受者
 	// - nbf (Not Before)：生效时间
 	// - jti (JWT ID)：编号
+	jwtpkg.StandardClaims
+}
 
-	// todo
+func NewJWT() *JWT {
+	return &JWT{
+		SignKey:    []byte(config.GetString("app.key")),
+		MaxRefresh: time.Duration(config.GetInt64("jwt.max_refresh_time")) * time.Minute,
+	}
 }
