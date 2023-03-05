@@ -14,6 +14,8 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			suc := new(auth.SignupController)
 			authGroup.POST("/signup/phone/exist", suc.IsPhoneExist)
 			authGroup.POST("/signup/email/exist", suc.IsEmailExist)
+			authGroup.POST("/signup/using-phone", suc.SignupUsingPhone)
+			authGroup.POST("/signup/using-email", suc.SignupUsingEmail)
 
 			vcc := new(auth.VerfifyCodeController)
 			// 图片验证码，需要加限流
