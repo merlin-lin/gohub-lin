@@ -29,3 +29,8 @@ func GetByPhone(phone string) (userModel User) {
 	database.DB.Where("phone = ?", phone).First(&userModel)
 	return
 }
+
+func Get(idStr string) (userMode User) {
+	database.DB.Where("id", idStr).First(&userMode)
+	return
+}
