@@ -17,3 +17,15 @@ func IsPhoneExist(phone string) bool {
 	database.DB.Model(User{}).Where("phone = ?", phone).Count(&count)
 	return count > 0
 }
+
+// GetByMulti 通过 手机号/Email/用户名 来获取用户
+func GetByMulti(loginId string) (userModel User) {
+	database.DB.Where("phone = ?", loginId).Or("email = ?", loginId).Or("name = ?", loginId).First(&userModel)
+	return
+}
+
+// GetByPhone 通过手机号获取用户
+func GetByPhone(phone string) (userModel User) {
+	database.DB.Where("phone = ?", phone).First(&userModel)
+	return
+}
