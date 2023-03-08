@@ -17,7 +17,7 @@ type SignupController struct {
 func (sc *SignupController) IsPhoneExist(c *gin.Context) {
 	// 初始化请求对象
 	request := requests.SignupPhoneExistRequest{}
-	if ok := requests.Validate(c, &request, requests.ValidateSignupPhoneExist); !ok {
+	if !requests.Validate(c, &request, requests.ValidateSignupPhoneExist) {
 		return
 	}
 
@@ -48,19 +48,19 @@ func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
 
 	// 2. 验证成功，创建数据
 	userModel := user.User{
-		Name:                  request.Name,
-		Phone:                 request.Phone,
-		Password:              request.Password,
+		Name:     request.Name,
+		Phone:    request.Phone,
+		Password: request.Password,
 	}
 	userModel.Create()
 
 	if userModel.ID > 0 {
 		token := jwt.NewJWT().IssueToken(userModel.GetStringID(), userModel.Name)
 		response.CreatedJSON(c, gin.H{
-			"data": userModel,
+			"data":  userModel,
 			"token": token,
 		})
-	}else {
+	} else {
 		response.Abort500(c, "创建用户失败，请稍后尝试~")
 	}
 }
@@ -82,7 +82,7 @@ func (sc *SignupController) SignupUsingEmail(c *gin.Context) {
 	if userModel.ID > 0 {
 		token := jwt.NewJWT().IssueToken(userModel.GetStringID(), userModel.Name)
 		response.CreatedJSON(c, gin.H{
-			"data": userModel,
+			"data":  userModel,
 			"token": token,
 		})
 	} else {
