@@ -196,3 +196,18 @@ func (migrator *Migrator) Refresh() {
 	// 再次执行所有迁移
 	migrator.Up()
 }
+
+func (migrator *Migrator) Fresh() {
+	// 获取数据库名称，用以提示
+	dbname := database.CurrentDatabase()
+	// 删除所有表
+	err := database.DeleteAllTables()
+	console.ExitIf(err)
+	console.Success("clearup database " + dbname)
+	// 重新创建 migrates 表
+	migrator.createMigrationsTable()
+	console.Success("[migrations] table created.")
+
+	// 重新调用 up 命令
+	migrator.Up()
+}
