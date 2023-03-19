@@ -1,6 +1,10 @@
 package file
 
-import "os"
+import (
+	"os"
+	"path/filepath"
+	"strings"
+)
 
 // Exists 判断文件是否存在
 func Exists(filePath string) bool {
@@ -18,4 +22,8 @@ func Put(data []byte, to string) error {
 		return err
 	}
 	return nil
+}
+
+func FileNameWithoutExtension(filename string) string {
+	return strings.TrimSuffix(filename, filepath.Ext(filename))
 }
