@@ -40,3 +40,8 @@ func Get(idStr string) (userMode User) {
 	database.DB.Where("id", idStr).First(&userMode)
 	return
 }
+
+func All() (users []User) {
+	database.DB.Find(&users)
+	return
+}
