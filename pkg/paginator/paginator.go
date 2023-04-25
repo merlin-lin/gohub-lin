@@ -58,7 +58,7 @@ func Paginate(c *gin.Context, db *gorm.DB, data interface{}, baseURL string, per
 		query: db,
 		ctx:   c,
 	}
-
+	p.initProperties(perPage, baseURL)
 	// 查询数据库
 	err := p.query.Preload(clause.Associations).
 		Order(p.Sort + " " + p.Order).
