@@ -9,8 +9,8 @@ import (
 type Category struct {
 	models.BaseModel
 
-	// Put fields in here
-	// FIXME()
+	Name        string `gorm:"type:varchar(255);not null;index"`
+	Description string `gorm:"type:varchar(255);default:null"`
 
 	models.CommonTimestampsField
 }
