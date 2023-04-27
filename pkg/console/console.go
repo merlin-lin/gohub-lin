@@ -1,9 +1,11 @@
+// Package console 命令行辅助方法
 package console
 
 import (
 	"fmt"
-	"github.com/mgutz/ansi"
 	"os"
+
+	"github.com/mgutz/ansi"
 )
 
 // Success 打印一条成功消息，绿色输出

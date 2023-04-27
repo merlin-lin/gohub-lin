@@ -1,9 +1,11 @@
+// Package cmd 存放程序的所有子命令
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"gohub/pkg/helpers"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 // Env 存储全局选项 --env 的值
