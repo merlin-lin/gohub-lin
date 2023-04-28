@@ -33,11 +33,11 @@ func init() {
 	}
 
 	up := func(migrator gorm.Migrator, DB *sql.DB) {
-		migrator.AutoMigrate(&User{})
+		migrator.AutoMigrate(&Topic{})
 	}
 
 	down := func(migrator gorm.Migrator, DB *sql.DB) {
-		migrator.DropTable(&User{})
+		migrator.DropTable(&Topic{})
 	}
 
 	migrate.Add("2023_04_28_152114_add_topics_table", up, down)
