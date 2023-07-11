@@ -6,6 +6,7 @@ import (
 	"gohub/app/models/user"
 	"gohub/pkg/config"
 	"gohub/pkg/jwt"
+	"gohub/pkg/logger"
 	"gohub/pkg/response"
 )
 
@@ -13,7 +14,8 @@ func AuthJWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		claims, err := jwt.NewJWT().ParserToken(c)
 
-		if err != nil{
+		if err != nil {
+			logger.ErrorJSON("jwt", "1", err.Error())
 			response.Unauthorized(c, fmt.Sprintf("请查看 %v 相关的接口认证文档", config.GetString("app.name")))
 			return
 		}
@@ -23,7 +25,6 @@ func AuthJWT() gin.HandlerFunc {
 			response.Unauthorized(c, "找不到对应用户，用户可能已删除")
 			return
 		}
-
 
 		c.Set("current_user_id", userModel.GetStringID())
 		c.Set("current_user_name", userModel.Name)

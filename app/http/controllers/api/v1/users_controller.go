@@ -1,12 +1,11 @@
 package v1
 
 import (
+	"github.com/gin-gonic/gin"
 	"gohub/app/models/user"
 	"gohub/app/requests"
 	"gohub/pkg/auth"
 	"gohub/pkg/response"
-
-	"github.com/gin-gonic/gin"
 )
 
 type UsersController struct {
@@ -47,5 +46,22 @@ func (ctrl *UsersController) UpdateProfile(c *gin.Context) {
 		response.Data(c, currentUser)
 	} else {
 		response.Abort500(c, "更新失败，请稍后再试~")
+	}
+}
+
+func (ctrl *UsersController) UpdateEmail(c *gin.Context) {
+	request := requests.UserUpdateEmailRequest{}
+	if ok := requests.Validate(c, &request, requests.UserUpdateEmail); !ok {
+		return
+	}
+
+	currentUser := auth.CurrentUser(c)
+	currentUser.Email = request.Email
+	rowsAffected := currentUser.Save()
+
+	if rowsAffected > 0 {
+		response.Success(c)
+	} else {
+		response.Abort500(c, "更新失败，请稍后尝试~")
 	}
 }
